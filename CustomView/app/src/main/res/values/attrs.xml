@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XToolbar">
+        <attr name="leftButtonImage" format="reference" />
+        <attr name="rightButtonImage" format="reference" />
+        <attr name="buttonImage1" format="integer" />
+        <attr name="buttonImage2" format="integer" />
+        <attr name="buttonImage3" format="integer" />
+
+    </declare-styleable>
+</resources>
