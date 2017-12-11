@@ -8,29 +8,20 @@
     android:background="#CCC"
     tools:context="fun.dooit.customview.MainActivity">
 
-    <!-- <fun.dooit.customview.TouchCounter
-         android:id="@+id/counter"
-         android:layout_width="100dp"
-         android:layout_height="100dp"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent" />
-
-     <TextView
-         android:id="@+id/text"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="#CCFFCC"
-         android:text="CDCDCD"
-         android:textSize="20dp"
-         app:layout_constraintTop_toBottomOf="@id/counter" />-->
 
     <fun.dooit.customview.XToolbar
         android:id="@+id/xtoolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:buttonSize="40dp"
         app:contentInsetStart="0dp"
-        app:leftButtonImage="@drawable/ic_menu_black_36dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:mainButton="@drawable/ic_alarm_black_36dp"
+        app:rightButton1="@drawable/ic_g_translate_black_36dp"
+        app:rightButton2="@drawable/ic_description_black_36dp"
+        app:rightButton3="@drawable/ic_message_black_36dp"
+        app:titleSize="14dp"
+        app:titleText="XML設定標題" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,12 +1,15 @@
 package fun.dooit.customview;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,24 +20,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LayoutInflater layoutInflater = LayoutInflater.from(this);
-        ViewGroup panelRoot = findViewById(R.id.panelRoot);
+        ConstraintLayout panelRoot = findViewById(R.id.panelRoot);
+
+       /* ImageButton imgBtn=new ImageButton(this);
+        ConstraintLayout.LayoutParams params=new ConstraintLayout.LayoutParams(panelRoot.getLayoutParams());
+        params.width= 800;
+        params.height=400;
+
+
+        TypedValue tv = new TypedValue();
+        this.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, tv, true);
+
+        imgBtn.setImageResource(R.drawable.ic_g_translate_black_36dp);
+        imgBtn.setBackgroundResource(tv.resourceId);
+        imgBtn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        imgBtn.setLayoutParams(params);
+        panelRoot.addView(imgBtn);*/
 
         XToolbar xToolbar = findViewById(R.id.xtoolbar);
-        xToolbar.setOnClickListener(new XToolbar.OnToolbarClick() {
+//        xToolbar.buildButton(R.drawable.ic_message_black_36dp);
+//        xToolbar.buildButton(R.drawable.ic_alarm_black_36dp);
+//        xToolbar.buildButton(R.drawable.ic_description_black_36dp);
+//        xToolbar.buildButton(R.drawable.ic_g_translate_black_36dp);
+       /* xToolbar.setOnClickListener(new XToolbar.OnToolbarClickListener() {
             @Override
-            public void onLeftClick(View view) {
-                Log.d(TAG, "onLeftClick() called with: view = [" + view + "]");
+            public void onMainClick(View view) {
+                Log.d(TAG, "onMainClick() called with: view = [" + view + "]");
             }
 
             @Override
-            public void onActionClick(View view) {
-                Log.d(TAG, "onActionClick() called with: view = [" + view + "]");
+            public void onExtraClick(View view) {
+                Log.d(TAG, "onExtraClick() called with: view = [" + view + "]");
             }
 
-            @Override
-            public void onIMClick(View view) {
-                Log.d(TAG, "onIMClick() called with: view = [" + view + "]");
-            }
+
 
             @Override
             public void onBtn1Click(View view) {
@@ -50,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onBtn3Click(View view) {
                 Log.d(TAG, "onBtn3Click() called with: view = [" + view + "]");
             }
-        });
+        });*/
 
         //addView 方法1
 //        layoutInflater.inflate(R.layout.button_submit, panelRoot, true);

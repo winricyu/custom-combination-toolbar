@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="XToolbar">
-        <attr name="leftButtonImage" format="reference" />
-        <attr name="rightButtonImage" format="reference" />
-        <attr name="buttonImage1" format="integer" />
-        <attr name="buttonImage2" format="integer" />
-        <attr name="buttonImage3" format="integer" />
+        <attr name="mainButton" format="reference" />
+        <attr name="extraButton" format="reference" />
+        <attr name="rightButton1" format="reference" />
+        <attr name="rightButton2" format="reference" />
+        <attr name="rightButton3" format="reference" />
+        <attr name="buttonSize" format="dimension" />
+        <attr name="titleText" format="string" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="titleGravity" format="reference">
+            <enum name="left" value="1" />
+            <enum name="center" value="2" />
+            <enum name="right" value="3" />
+        </attr>
 
     </declare-styleable>
 </resources>
