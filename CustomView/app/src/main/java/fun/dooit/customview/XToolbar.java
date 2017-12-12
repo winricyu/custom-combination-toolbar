@@ -3,11 +3,9 @@ package fun.dooit.customview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -46,19 +44,17 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
     private OnToolbarClickListener mClickListener;
     private LinearLayout mPanelRight;
     private TextView mTextTilte;
-    private float mButtonSizePx;
-    private float mTitleSizePx;
+    private int mButtonSizePx;
+    private int mTitleSizePx;
     private DisplayMetrics mMetrics;
     private TypedArray mTypedArray;
 
     public XToolbar(Context context) {
         super(context);
-        Log.d(TAG, "XToolbar() called with: context = [" + context + "]");
     }
 
     public XToolbar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Log.d(TAG, "XToolbar() called with: context = [" + context + "], attrs = [" + attrs + "]");
 
         //解析XML設定值參數
         mMetrics = getResources().getDisplayMetrics();
@@ -70,16 +66,16 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
         Drawable imgResId2 = mTypedArray.getDrawable(R.styleable.XToolbar_rightButton2);
         Drawable imgResId3 = mTypedArray.getDrawable(R.styleable.XToolbar_rightButton3);
         String titleText = mTypedArray.getString(R.styleable.XToolbar_titleText);
-        mTitleSizePx = mTypedArray.getDimension(R.styleable.XToolbar_titleSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TEXT_SIZE_DP, mMetrics));
-        mButtonSizePx = mTypedArray.getDimension(R.styleable.XToolbar_buttonSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_BUTTON_SIZE_DP, mMetrics));
+        mTitleSizePx = (int) mTypedArray.getDimension(R.styleable.XToolbar_titleSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_TEXT_SIZE_DP, mMetrics));
+        mButtonSizePx = (int) mTypedArray.getDimension(R.styleable.XToolbar_buttonSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_BUTTON_SIZE_DP, mMetrics));
 
         String textGravity = mTypedArray.getString(R.styleable.XToolbar_titleGravity);
 
         //初始化顯示物件
         LayoutInflater.from(context).inflate(R.layout.custom_toolbar, this);
         mPanelRight = findViewById(R.id.panel_right);
-        mBtnMain = findViewById(R.id.xtoolbar_btn_left);
-        mBtnExtra = findViewById(R.id.xtoolbar_btn_action);
+        mBtnMain = findViewById(R.id.xtoolbar_btn_main);
+        mBtnExtra = findViewById(R.id.xtoolbar_btn_extra);
         mTextTilte = findViewById(R.id.text_title);
 
 
@@ -110,7 +106,7 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
 
         //建立左側主要按鈕(選單或返回)
         mBtnMain.setTag(TAG_BTN_MAIN);
-        mBtnMain.setVisibility(GONE);
+        mBtnMain.setVisibility(INVISIBLE);
         if (btnMainResId != null && mBtnMain != null) {
             TypedValue tv = new TypedValue();
             getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, tv, true);
@@ -118,12 +114,9 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
             mBtnMain.setImageDrawable(btnMainResId);
             mBtnMain.setBackgroundResource(tv.resourceId);
 
-            int wh = (int) mButtonSizePx;
-            int marginPx = (int) (mMetrics.density * DEFAULT_MARGIN_DP);
-            ConstraintLayout layout= (ConstraintLayout) mBtnMain.getParent();
-            ConstraintLayout.LayoutParams params= new ConstraintLayout.LayoutParams(layout.getLayoutParams());
-            params.width=wh;
-            params.height=wh;
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) mBtnMain.getLayoutParams();
+            params.width = mButtonSizePx;
+            params.height = mButtonSizePx;
             mBtnMain.setLayoutParams(params);
             mBtnMain.setOnClickListener(this);
         }
@@ -145,10 +138,18 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
 
         //建立右側額外按鈕
         mBtnExtra.setTag(TAG_BTN_EXTRA);
-        mBtnExtra.setVisibility(GONE);
+        mBtnExtra.setVisibility(INVISIBLE);
         if (btnExtraResId != null && mBtnExtra != null) {
-            mBtnExtra.setVisibility(VISIBLE);
-            mBtnExtra.setBackground(btnMainResId);
+            TypedValue tv = new TypedValue();
+            getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, tv, true);
+//            mBtnExtra.setVisibility(VISIBLE);
+            mBtnExtra.setImageDrawable(btnExtraResId);
+            mBtnExtra.setBackgroundResource(tv.resourceId);
+
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) mBtnExtra.getLayoutParams();
+            params.width = mButtonSizePx;
+            params.height = mButtonSizePx;
+            mBtnExtra.setLayoutParams(params);
             mBtnExtra.setOnClickListener(this);
         }
     }
@@ -189,15 +190,11 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
             return;
         }
         ImageButton imgBtn = new ImageButton(getContext());
-        int wh = (int) mButtonSizePx;
         int marginPx = (int) (mMetrics.density * DEFAULT_MARGIN_DP);
-        Log.d(TAG, "mButtonSizePx:" + mButtonSizePx);
-        Log.d(TAG, "wh:" + wh);
-        Log.d(TAG, "marginPx:" + marginPx);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mPanelRight.getLayoutParams());
-        params.width = wh;
-        params.height = wh;
+        params.width = mButtonSizePx;
+        params.height = mButtonSizePx;
         params.setMarginEnd(marginPx);
 
 
@@ -209,7 +206,6 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
 
 
         String tag = "rightButton_" + (childCount + 1);
-        Log.d(TAG, "tag:" + tag);
         imgBtn.setTag(tag);
         imgBtn.setOnClickListener(this);
 
@@ -235,6 +231,17 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
             mPanelRight.setVisibility(VISIBLE);
         } else {
             mPanelRight.setVisibility(INVISIBLE);
+        }
+    }
+
+    public void setExtraButtonVisible(boolean isVisible) {
+        if (mBtnExtra== null) {
+            return;
+        }
+        if (isVisible) {
+            mBtnExtra.setVisibility(VISIBLE);
+        } else {
+            mBtnExtra.setVisibility(INVISIBLE);
         }
     }
 
@@ -270,16 +277,6 @@ public class XToolbar extends Toolbar implements View.OnClickListener {
         }
     }
 
-
- /*   private void findButtonByTag(String tag) {
-        View imgBtn = mPanelRight.findViewWithTag(tag);
-        if (imgBtn == null) {
-            Log.d(TAG, "指定tag物件不存在");
-            return;
-        }
-
-    }
-*/
 
     public void setOnClickListener(OnToolbarClickListener listener) {
         this.mClickListener = listener;
